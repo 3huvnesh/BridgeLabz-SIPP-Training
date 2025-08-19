@@ -1,5 +1,0 @@
-HashMap scores = {"Alice": 85, "Bob": 92, "Charlie": 78}
-
-findMax = entry in scores with max value
-
-print "Top Scorer:", findMax.key, findMax.value
