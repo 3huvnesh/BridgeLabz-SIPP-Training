@@ -1,0 +1,16 @@
+
+Class Transaction<T>
+    Attribute: transactionId, amount, method (type T)
+    Constructor(id, amount, method)
+
+    Method process()
+        print "Processing Transaction:", transactionId, "Amount:", amount, "Method:", method
+
+Main
+    upiTx = Transaction<String>(1001, 500, "UPI")
+    cardTx = Transaction<String>(1002, 2000, "Card")
+    netTx = Transaction<String>(1003, 1500, "NetBanking")
+
+    upiTx.process()
+    cardTx.process()
+    netTx.process()

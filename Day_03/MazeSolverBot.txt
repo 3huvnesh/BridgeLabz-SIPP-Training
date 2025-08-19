@@ -1,0 +1,36 @@
+
+Function solveMaze(maze, x, y, solution)
+    if x,y is outside maze OR maze[x][y] == 0
+        return false
+
+    if x,y is goal cell
+        solution[x][y] = 1
+        return true
+
+    if solution[x][y] == 1
+        return false   // already visited
+
+    solution[x][y] = 1
+
+    // Move right
+    if solveMaze(maze, x, y+1, solution) == true
+        return true
+    // Move down
+    if solveMaze(maze, x+1, y, solution) == true
+        return true
+
+    solution[x][y] = 0   // backtrack
+    return false
+
+Main
+    maze = [
+        [1, 0, 0, 0],
+        [1, 1, 0, 1],
+        [0, 1, 0, 0],
+        [1, 1, 1, 1]
+    ]
+    solution = 4x4 zero matrix
+    if solveMaze(maze, 0, 0, solution)
+        print solution
+    else
+        print "No path found"

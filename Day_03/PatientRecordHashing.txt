@@ -1,0 +1,27 @@
+
+HashMap patients = {}
+
+Function addPatient(id, name)
+    patients[id] = name
+
+Function getPatient(id)
+    return patients[id]
+
+Function updatePatient(id, newName)
+    if id in patients
+        patients[id] = newName
+
+Function deletePatient(id)
+    if id in patients
+        remove id from patients
+
+Main
+    addPatient(101, "Alice")
+    addPatient(102, "Bob")
+
+    print getPatient(101)
+
+    updatePatient(101, "Alice Smith")
+    deletePatient(102)
+
+    print patients

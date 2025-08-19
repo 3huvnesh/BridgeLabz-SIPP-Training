@@ -1,0 +1,16 @@
+
+Class Book
+    Attributes: title, year, rating
+    Constructor(title, year, rating)
+
+books = [
+    Book("Java Basics", 2012, 4.7),
+    Book("AI Revolution", 2018, 4.9),
+    Book("Data Structures", 2014, 4.3),
+    Book("Cloud Computing", 2021, 4.8)
+]
+
+filteredBooks = books where year > 2015 AND rating > 4.5
+
+for each b in filteredBooks
+    print b.title, b.year, b.rating

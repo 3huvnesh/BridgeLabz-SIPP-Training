@@ -1,0 +1,57 @@
+// Doctor.java (Data class)
+CLASS Doctor {
+    STRING name
+    STRING specialization
+    INT doctorId
+
+    Doctor(STRING name, STRING specialization, INT doctorId) {
+        this.name = name
+        this.specialization = specialization
+        this.doctorId = doctorId
+    }
+    
+    METHOD getSpecialization() RETURNS STRING {
+        RETURN this.specialization
+    }
+}
+
+// HospitalSystem.java
+CLASS HospitalSystem {
+    // Map of departments to lists of doctors
+    Map<STRING, LIST<Doctor>> departments = NEW HashMap<STRING, LIST<Doctor>>()
+
+    METHOD addDoctorToDepartment(STRING deptName, Doctor doctor) {
+        IF NOT this.departments.containsKey(deptName) THEN
+            this.departments.put(deptName, NEW ArrayList<Doctor>())
+        END IF
+        this.departments.get(deptName).add(doctor)
+    }
+
+    // Method to filter doctors by specialization
+    METHOD filterDoctorsBySpecialization(STRING deptName, STRING specialty) {
+        IF NOT this.departments.containsKey(deptName) THEN
+            PRINT "Department not found."
+            RETURN
+        END IF
+        
+        LIST<Doctor> doctorsInDept = this.departments.get(deptName)
+        
+        PRINT "Doctors in " + deptName + " with specialization '" + specialty + "':"
+        
+        // Use a stream to filter and display
+        doctorsInDept.stream()
+            .filter(doc -> doc.getSpecialization().equals(specialty))
+            .forEach(doc -> PRINT " - " + doc.name)
+    }
+}
+
+// Main.java (Example Usage)
+MAIN {
+    HospitalSystem hospital = NEW HospitalSystem()
+    hospital.addDoctorToDepartment("Cardiology", NEW Doctor("Dr. Smith", "Cardiology", 101))
+    hospital.addDoctorToDepartment("Cardiology", NEW Doctor("Dr. Jones", "Pediatrics", 102))
+    hospital.addDoctorToDepartment("Neurology", NEW Doctor("Dr. Lee", "Neurology", 103))
+    
+    hospital.filterDoctorsBySpecialization("Cardiology", "Cardiology") // Prints Dr. Smith
+    hospital.filterDoctorsBySpecialization("Neurology", "Neurology") // Prints Dr. Lee
+}
