@@ -1,0 +1,17 @@
+Class TextEditor
+    Attribute: stack undoHistory
+    Method type(text)
+        push text into undoHistory
+    Method undo()
+        if stack is not empty
+            lastAction = pop from undoHistory
+            print "Undo:", lastAction
+        else
+            print "Nothing to undo"
+
+Main
+    editor = TextEditor()
+    editor.type("Hello")
+    editor.type("World")
+    editor.undo()  
+    editor.undo()  
