@@ -1,0 +1,16 @@
+Pseudo-code: Bus Route Navigator
+
+Class Node
+    Attributes: stopName, next
+
+Class LinkedList
+    Attributes: head
+    Method insertStop(afterStop, newStop)
+    Method deleteStop(stopName)
+    Method searchStop(stopName)
+
+Main
+    Initialize route: Depot → Main Street → City Mall → Hospital → Airport
+    Insert "University" after "City Mall"
+    Delete "Hospital"
+    Search "Airport" → Found

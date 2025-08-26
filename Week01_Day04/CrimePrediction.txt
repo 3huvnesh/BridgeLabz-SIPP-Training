@@ -1,0 +1,65 @@
+// CityGraph.java
+CLASS CityGraph {
+    Map<STRING, LIST<STRING>> adjacencyList
+    Map<STRING, INT> crimeData
+
+    CityGraph() {
+        this.adjacencyList = NEW HashMap<STRING, LIST<STRING>>()
+        this.crimeData = NEW HashMap<STRING, INT>()
+    }
+
+    METHOD addZone(STRING zone) {
+        this.adjacencyList.put(zone, NEW ArrayList<STRING>())
+    }
+
+    METHOD addRoad(STRING zone1, STRING zone2) {
+        this.adjacencyList.get(zone1).add(zone2)
+        this.adjacencyList.get(zone2).add(zone1)
+    }
+
+    METHOD addCrimeData(STRING zone, INT crimes) {
+        this.crimeData.put(zone, crimes)
+    }
+
+    // DFS to find connected high-risk areas
+    METHOD findHighRiskAreas(INT threshold) {
+        Set<STRING> visited = NEW HashSet<STRING>()
+        FOR zone IN this.adjacencyList.keySet()
+            IF !visited.contains(zone) AND this.crimeData.get(zone) > threshold THEN
+                LIST<STRING> cluster = NEW ArrayList<STRING>()
+                dfs(zone, visited, cluster, threshold)
+                PRINT "High-risk cluster found: " + cluster
+            END IF
+        END FOR
+    }
+
+    PRIVATE METHOD dfs(STRING zone, Set<STRING> visited, LIST<STRING> cluster, INT threshold) {
+        visited.add(zone)
+        cluster.add(zone)
+        
+        FOR neighbor IN this.adjacencyList.get(zone)
+            IF !visited.contains(neighbor) AND this.crimeData.get(neighbor) > threshold THEN
+                dfs(neighbor, visited, cluster, threshold)
+            END IF
+        END FOR
+    }
+}
+
+// Main.java (Example Usage)
+MAIN {
+    CityGraph city = NEW CityGraph()
+    city.addZone("A")
+    city.addZone("B")
+    city.addZone("C")
+    city.addZone("D")
+    city.addRoad("A", "B")
+    city.addRoad("B", "C")
+    city.addRoad("A", "D")
+
+    city.addCrimeData("A", 15) // High-risk
+    city.addCrimeData("B", 18) // High-risk
+    city.addCrimeData("C", 5)  // Low-risk
+    city.addCrimeData("D", 20) // High-risk
+
+    city.findHighRiskAreas(10) // Will find two clusters: [A, B] and [D]
+}

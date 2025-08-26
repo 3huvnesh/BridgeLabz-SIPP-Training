@@ -1,0 +1,17 @@
+Pseudo-code: Simple Word Counter
+
+Method countWords(paragraph)
+    Split paragraph into words
+    Convert each word to lowercase
+    Remove punctuation
+    For each word
+        If word in map
+            map[word] += 1
+        Else
+            map[word] = 1
+    Sort map by frequency
+    Print words with counts
+
+Main
+    Paragraph = "The news today is about the rise in technology trends."
+    Count words → {the:2, news:1, today:1, ...}

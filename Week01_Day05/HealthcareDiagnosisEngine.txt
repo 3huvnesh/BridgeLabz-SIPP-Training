@@ -1,0 +1,36 @@
+Define Interface DiagnosisStrategy
+    Method diagnose(symptoms)
+
+Define Class RuleBasedDiagnosis implements DiagnosisStrategy
+    Method diagnose(symptoms)
+        If symptoms contain fever and cough
+            Return [Flu, COVID-19]
+
+Define Class AIBasedDiagnosis implements DiagnosisStrategy
+    Method diagnose(symptoms)
+        If symptoms contain headache and dizziness
+            Return [Migraine, Vertigo]
+
+Define Class ProbabilityBasedDiagnosis implements DiagnosisStrategy
+    Method diagnose(symptoms)
+        Return [Common Cold, Allergy]
+
+Define Class GeneticPatternDiagnosis implements DiagnosisStrategy
+    Method diagnose(symptoms)
+        Return [Genetic Disorder]
+
+Define Class DiagnosisContext
+    Attribute strategy
+    Method setStrategy(strategy)
+        this.strategy = strategy
+    Method executeDiagnosis(symptoms)
+        Return strategy.diagnose(symptoms)
+
+Main
+    context = new DiagnosisContext
+    context.setStrategy(RuleBasedDiagnosis)
+    Print context.executeDiagnosis([fever, cough, fatigue])
+    context.setStrategy(AIBasedDiagnosis)
+    Print context.executeDiagnosis([headache, dizziness, nausea])
+    context.setStrategy(GeneticPatternDiagnosis)
+    Print context.executeDiagnosis([gene, mutation])

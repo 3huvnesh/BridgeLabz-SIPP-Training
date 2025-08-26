@@ -1,0 +1,59 @@
+// Transaction.java (Data class)
+CLASS Transaction {
+    STRING merchant
+    FLOAT amount
+    LocalDate transactionDate
+}
+
+// TransactionReportGenerator.java
+CLASS TransactionReportGenerator {
+    LIST<Transaction> transactions
+
+    TransactionReportGenerator(LIST<Transaction> transactions) {
+        this.transactions = transactions
+    }
+
+    METHOD generateReport() {
+        // Use streams to group and summarize transactions
+        Map<STRING, Map<INT, LIST<Transaction>>> report = 
+            this.transactions.stream()
+                // Group by merchant first
+                .collect(Collectors.groupingBy(
+                    Transaction::getMerchant,
+                    // Then group by month within each merchant group
+                    Collectors.groupingBy(t -> t.transactionDate.getMonthValue())
+                ))
+
+        // Print the report
+        FOR merchantEntry IN report.entrySet()
+            STRING merchant = merchantEntry.getKey()
+            PRINT "--- " + merchant + " Report ---"
+            
+            FOR monthEntry IN merchantEntry.getValue().entrySet()
+                INT month = monthEntry.getKey()
+                LIST<Transaction> monthlyTransactions = monthEntry.getValue()
+                
+                // Calculate total amount for the month
+                FLOAT monthlyTotal = monthlyTransactions.stream()
+                    .mapToDouble(Transaction::getAmount)
+                    .sum()
+
+                PRINT "  Month " + month + ":"
+                PRINT "    Total Transactions: " + monthlyTransactions.size()
+                PRINT "    Total Amount: $" + monthlyTotal
+            END FOR
+        END FOR
+    }
+}
+
+// Main.java (Example Usage)
+MAIN {
+    LIST<Transaction> transactions = NEW ArrayList<Transaction>()
+    transactions.add(NEW Transaction("Amazon", 50.0, LocalDate.of(2025, 1, 15)))
+    transactions.add(NEW Transaction("Starbucks", 5.5, LocalDate.of(2025, 1, 20)))
+    transactions.add(NEW Transaction("Amazon", 120.0, LocalDate.of(2025, 2, 10)))
+    transactions.add(NEW Transaction("Starbucks", 6.0, LocalDate.of(2025, 2, 5)))
+    
+    TransactionReportGenerator reportGen = NEW TransactionReportGenerator(transactions)
+    reportGen.generateReport()
+}

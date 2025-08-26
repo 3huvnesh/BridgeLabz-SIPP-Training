@@ -1,0 +1,18 @@
+Pseudo-code: Daily Tasks Organizer
+
+Class TaskOrganizer
+    Attribute: tasks = LinkedHashMap<Integer, String>
+    Method addTask(description)
+        Auto-generate taskID
+        tasks.put(taskID, description)
+    Method removeTask(taskID)
+        tasks.remove(taskID)
+    Method viewTasks()
+        Print tasks in insertion order
+
+Main
+    Add "Check emails"
+    Add "Prepare sales report"
+    Add "Call client"
+    Remove task2
+    Show tasks

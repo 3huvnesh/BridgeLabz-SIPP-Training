@@ -1,0 +1,85 @@
+// Rentable.java (Interface)
+INTERFACE Rentable {
+    VOID rent(INT days)
+    FLOAT calculatePrice(INT days)
+}
+
+// Vehicle.java (Abstract Class)
+ABSTRACT CLASS Vehicle {
+    STRING brand
+    STRING model
+    INT year
+    FLOAT basePricePerDay
+    BOOLEAN isRented
+
+    // Constructor, getters, etc.
+}
+
+// Car.java
+CLASS Car EXTENDS Vehicle IMPLEMENTS Rentable {
+    INT seats
+
+    Car(STRING brand, STRING model, INT year, INT seats) {
+        this.brand = brand
+        this.model = model
+        this.year = year
+        this.seats = seats
+        this.basePricePerDay = 50.00
+    }
+
+    OVERRIDE METHOD rent(INT days) {
+        this.isRented = TRUE
+        PRINT "Rented " + this.brand + " " + this.model + " for " + days + " days."
+    }
+
+    OVERRIDE METHOD calculatePrice(INT days) RETURNS FLOAT {
+        RETURN this.basePricePerDay * days
+    }
+}
+
+// Motorcycle.java
+CLASS Motorcycle EXTENDS Vehicle IMPLEMENTS Rentable {
+    BOOLEAN hasHelmet
+
+    Motorcycle(STRING brand, STRING model, INT year, BOOLEAN hasHelmet) {
+        this.brand = brand
+        this.model = model
+        this.year = year
+        this.hasHelmet = hasHelmet
+        this.basePricePerDay = 30.00
+    }
+
+    OVERRIDE METHOD rent(INT days) {
+        this.isRented = TRUE
+        PRINT "Rented " + this.brand + " " + this.model + " for " + days + " days."
+    }
+
+    OVERRIDE METHOD calculatePrice(INT days) RETURNS FLOAT {
+        RETURN this.basePricePerDay * days
+    }
+}
+
+// VehicleFactory.java (Factory Pattern)
+CLASS VehicleFactory {
+    STATIC METHOD createVehicle(STRING type, STRING brand, STRING model, INT year, Object... details) RETURNS Vehicle {
+        SWITCH type
+            CASE "Car":
+                RETURN NEW Car(brand, model, year, (INT) details[0])
+            CASE "Motorcycle":
+                RETURN NEW Motorcycle(brand, model, year, (BOOLEAN) details[0])
+            DEFAULT:
+                RETURN null
+        END SWITCH
+    }
+}
+
+// Main.java (Example Usage)
+MAIN {
+    Vehicle myCar = VehicleFactory.createVehicle("Car", "Toyota", "Corolla", 2022, 5)
+    Vehicle myMotorcycle = VehicleFactory.createVehicle("Motorcycle", "Honda", "CBR", 2020, TRUE)
+
+    // Using the Rentable interface for polymorphism
+    Rentable carRental = (Rentable) myCar
+    carRental.rent(7)
+    PRINT "Total cost: $" + carRental.calculatePrice(7)
+}

@@ -1,0 +1,56 @@
+// Flight.java (Data class)
+CLASS Flight {
+    STRING flightNumber
+    FLOAT price
+    INT durationInHours
+}
+
+// FlightComparator.java
+CLASS FlightComparator IMPLEMENTS Comparator<Flight> {
+    // Compares based on price, then duration
+    OVERRIDE METHOD compare(Flight f1, Flight f2) RETURNS INT {
+        IF f1.price != f2.price THEN
+            RETURN f1.price - f2.price // Sort by price (ascending)
+        ELSE
+            RETURN f1.durationInHours - f2.durationInHours // Sort by duration (ascending)
+        END IF
+    }
+}
+
+// MergeSort.java
+CLASS MergeSort {
+    METHOD sort(LIST<Flight> flights, Comparator<Flight> comparator) {
+        mergeSort(flights, comparator, 0, flights.size() - 1)
+    }
+
+    PRIVATE METHOD mergeSort(LIST<Flight> flights, Comparator<Flight> comp, INT left, INT right) {
+        IF left < right THEN
+            INT mid = (left + right) / 2
+            mergeSort(flights, comp, left, mid)
+            mergeSort(flights, comp, mid + 1, right)
+            merge(flights, comp, left, mid, right)
+        END IF
+    }
+
+    PRIVATE METHOD merge(LIST<Flight> flights, Comparator<Flight> comp, INT left, INT mid, INT right) {
+        // ... standard merge sort merge logic
+        // This part would involve creating temporary lists and merging them back
+        // based on the custom comparator 'comp'.
+    }
+}
+
+// Main.java (Example Usage)
+MAIN {
+    LIST<Flight> flights = NEW ArrayList<Flight>()
+    flights.add(NEW Flight("AA101", 350.0, 5))
+    flights.add(NEW Flight("UA202", 300.0, 6))
+    flights.add(NEW Flight("DL303", 350.0, 4))
+
+    MergeSort sorter = NEW MergeSort()
+    FlightComparator priceDurationComp = NEW FlightComparator()
+    sorter.sort(flights, priceDurationComp)
+
+    FOR flight IN flights
+        PRINT "Flight: " + flight.flightNumber + ", Price: $" + flight.price + ", Duration: " + flight.durationInHours + "h"
+    END FOR
+}

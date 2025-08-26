@@ -1,0 +1,18 @@
+Pseudo-code: Attendance Marker
+
+Matrix attendance[students][days]
+
+Method markAttendance(student, day, value)
+    attendance[student][day] = value
+
+Method updateAttendance(student, day, value)
+    attendance[student][day] = value
+
+Method generateReport(student)
+    Count 'P' in attendance[student]
+    Print "Total Present Days: " + count
+
+Main
+    Student1: P, P, A, P, P, P, A (week1)
+    Teacher updates day3: A → P
+    Generate monthly report → Present = 26 days

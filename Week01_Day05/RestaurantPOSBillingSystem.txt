@@ -1,0 +1,40 @@
+Define Abstract TaxCalculator
+    Method calculate(price)
+
+Define Class FoodTax extends TaxCalculator
+    Method calculate(price)
+        Return price * 0.05
+
+Define Class BeverageTax extends TaxCalculator
+    Method calculate(price)
+        Return price * 0.12
+
+Define Class ImportedTax extends TaxCalculator
+    Method calculate(price)
+        Return price * 0.05 + customs_duty
+
+Define Interface DiscountPolicy
+    Method apply(amount)
+
+Define Class NoDiscount implements DiscountPolicy
+    Method apply(amount)
+        Return amount
+
+Define Class FlatDiscount implements DiscountPolicy
+    Method apply(amount)
+        Return amount - 100
+
+Define Class PercentageDiscount implements DiscountPolicy
+    Method apply(amount)
+        Return amount * 0.9
+
+Define Class Item
+    Attributes name, price, tax
+    Method finalPrice()
+        Return price + tax.calculate(price)
+
+Main
+    items = [Paneer Tikka with FoodTax, Coke with BeverageTax, Imported Cheese with ImportedTax]
+    total = sum of item.finalPrice for all items
+    discount = PercentageDiscount
+    Print discount.apply(total)

@@ -1,0 +1,25 @@
+Pseudo-code: Online Exam Portal
+
+Class User
+    Attributes: username, password
+    Method login()
+
+Class Student inherits User
+    Override login()
+        If student is registered AND enrolled
+            Print "Access granted to exams"
+        Else
+            Print "Access denied"
+
+Class Admin inherits User
+    Override login()
+        If admin credentials are valid AND role is admin
+            Print "Access granted to manage exams"
+        Else
+            Print "Access denied"
+
+Main
+    Create Student("john123", "pass123")
+    Student.login()
+    Create Admin("admin1", "secure123")
+    Admin.login()

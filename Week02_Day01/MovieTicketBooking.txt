@@ -1,0 +1,22 @@
+Pseudo-code: Movie Ticket Booking
+
+Class Ticket
+    Attributes: movieName, seatNumber, price, status
+
+Class Theatre
+    Attributes: movieSchedules, availableSeats
+    Method issueTicket(customer, movie, seat)
+    Method cancelTicket(ticket)
+
+Class Customer
+    Attributes: name
+    Method bookTicket(theatre, movie, seat)
+    Method cancelTicket(theatre, ticket)
+
+Main
+    Customer "Ravi"
+    Theatre "PVR"
+    Ravi books "Avengers: Endgame", 6 PM, Seat A12
+    Ticket issued
+    Ravi cancels ticket
+    Seat A12 marked available

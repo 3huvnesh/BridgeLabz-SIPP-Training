@@ -1,0 +1,56 @@
+// Course.java (Data class)
+CLASS Course {
+    STRING courseCode
+    STRING title
+}
+
+// Student.java (Data class)
+CLASS Student {
+    STRING studentId
+    STRING name
+}
+
+// Registrar.java
+CLASS Registrar {
+    // Map of Course objects to a list of enrolled Student objects
+    Map<Course, LIST<Student>> registrations = NEW HashMap<Course, LIST<Student>>()
+
+    METHOD registerStudent(Course course, Student student) {
+        IF !this.registrations.containsKey(course) THEN
+            this.registrations.put(course, NEW ArrayList<Student>())
+        END IF
+        this.registrations.get(course).add(student)
+        PRINT student.name + " registered for " + course.title
+    }
+
+    METHOD displayStudentsInCourse(Course course) {
+        IF !this.registrations.containsKey(course) THEN
+            PRINT "No students registered for this course."
+            RETURN
+        END IF
+
+        LIST<Student> students = this.registrations.get(course)
+        PRINT "Students registered for " + course.title + ":"
+        FOR student IN students
+            PRINT " - " + student.name
+        END FOR
+    }
+}
+
+// Main.java (Example Usage)
+MAIN {
+    Registrar reg = NEW Registrar()
+    Course cs101 = NEW Course("CS101", "Intro to Programming")
+    Course math202 = NEW Course("MATH202", "Calculus II")
+    Student alice = NEW Student("S001", "Alice")
+    Student bob = NEW Student("S002", "Bob")
+    Student charlie = NEW Student("S003", "Charlie")
+
+    reg.registerStudent(cs101, alice)
+    reg.registerStudent(cs101, bob)
+    reg.registerStudent(math202, bob)
+    reg.registerStudent(math202, charlie)
+    
+    reg.displayStudentsInCourse(cs101)
+    reg.displayStudentsInCourse(math202)
+}

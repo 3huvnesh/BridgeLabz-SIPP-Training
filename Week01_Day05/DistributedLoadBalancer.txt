@@ -1,0 +1,12 @@
+Initialize queue servers with [S1, S2, S3]
+Initialize requests with [R1, R2, R3, R4, R5]
+count = 1
+For each request in requests
+    If count == 4
+        Add S4 to servers
+    server = remove front of servers
+    Print request -> server
+    Add server to back of servers
+    If count == 5
+        Remove S2 from servers
+    count = count + 1

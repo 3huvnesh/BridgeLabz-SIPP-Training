@@ -1,0 +1,74 @@
+// Account.java (Base Class)
+CLASS Account {
+    INT accountNumber
+    FLOAT balance
+    STRING accountHolder
+
+    Account(INT number, STRING holder, FLOAT initialBalance) {
+        this.accountNumber = number
+        this.accountHolder = holder
+        this.balance = initialBalance
+    }
+
+    METHOD deposit(FLOAT amount) {
+        this.balance += amount
+        PRINT "Deposited $" + amount + ". New balance: $" + this.balance
+    }
+
+    // This method will be overridden
+    METHOD withdraw(FLOAT amount) {
+        IF this.balance >= amount THEN
+            this.balance -= amount
+            PRINT "Withdrew $" + amount + ". New balance: $" + this.balance
+        ELSE
+            PRINT "Insufficient funds."
+        END IF
+    }
+}
+
+// SavingAccount.java
+CLASS SavingAccount EXTENDS Account {
+    FLOAT minimumBalance = 500.00
+
+    SavingAccount(INT number, STRING holder, FLOAT initialBalance) {
+        SUPER(number, holder, initialBalance)
+    }
+
+    // Override the withdraw method to enforce minimum balance
+    OVERRIDE METHOD withdraw(FLOAT amount) {
+        IF (this.balance - amount) >= this.minimumBalance THEN
+            SUPER.withdraw(amount) // Call the parent method
+        ELSE
+            PRINT "Withdrawal failed. Balance cannot go below minimum of $" + this.minimumBalance
+        END IF
+    }
+}
+
+// CurrentAccount.java
+CLASS CurrentAccount EXTENDS Account {
+    FLOAT overdraftLimit = 2000.00
+
+    CurrentAccount(INT number, STRING holder, FLOAT initialBalance) {
+        SUPER(number, holder, initialBalance)
+    }
+    
+    // Override the withdraw method to allow overdraft
+    OVERRIDE METHOD withdraw(FLOAT amount) {
+        IF (this.balance - amount) >= -this.overdraftLimit THEN
+            SUPER.withdraw(amount)
+        ELSE
+            PRINT "Withdrawal failed. Overdraft limit exceeded."
+        END IF
+    }
+}
+
+// Main.java (Example Usage)
+MAIN {
+    SavingAccount savings = NEW SavingAccount(101, "Alice", 1000.00)
+    savings.withdraw(600.00) // Fails due to minimum balance
+    savings.withdraw(200.00) // Succeeds
+    
+    CurrentAccount current = NEW CurrentAccount(201, "Bob", 500.00)
+    current.withdraw(1000.00) // Succeeds, balance becomes -500
+    current.withdraw(1600.00) // Fails, exceeds overdraft limit
+}

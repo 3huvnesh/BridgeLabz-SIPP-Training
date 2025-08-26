@@ -1,0 +1,7 @@
+Initialize data as Map of Zone to Map of Day to List of Readings
+Add Zone-A with Day-2025-08-01 and readings [120, 90, 200, 150]
+Add Zone-B with Day-2025-08-01 and readings [300, 350, 250]
+For each zone in data
+    For each day in zone
+        peak = maximum of readings
+        Print zone, day, peak

@@ -1,0 +1,12 @@
+Define Class Employee
+    Attributes name, department, rating, salary
+
+Main
+    employees = [A in IT rating 5 salary 50000, B in IT rating 3 salary 30000, C in IT rating 2 salary 20000]
+    Group employees by department
+    For each department
+        pool = 10 percent of sum of salaries
+        totalRating = sum of ratings
+        For each employee in department
+            share = (employee.rating / totalRating) * pool
+            Print department, employee.name, share

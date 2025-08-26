@@ -1,0 +1,29 @@
+Define Class TrieNode
+    Attributes children map, isEnd, popularity, word
+
+Define Class Trie
+    root = new TrieNode
+
+    Method insert(word, popularity)
+        Traverse word characters
+        Create child nodes if missing
+        At end, mark isEnd true and store popularity and word
+
+    Method search(prefix, n)
+        Traverse prefix characters
+        If missing, return empty
+        Collect all nodes from this point
+        Sort by popularity
+        Return top n words
+
+    Method collect(node, result)
+        If node isEnd add node to result
+        For each child, call collect
+
+Main
+    trie = new Trie
+    trie.insert("pizza hut", 5)
+    trie.insert("pizza point", 3)
+    trie.insert("pita bread", 7)
+    trie.insert("pizzeria", 2)
+    Print trie.search("pi", 3)
